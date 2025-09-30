@@ -3,6 +3,4 @@
 sudo apt update -y
 sudo apt install apache2 -y
 
-# Start and enable Apache
-sudo systemctl start apache2
-sudo systemctl enable apache2
+rm /var/www/html/index.html
