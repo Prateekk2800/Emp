@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Details Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      min-height: 100vh;
+      margin: 0;
+      padding: 30px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 30px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(-10px);}
+      to {opacity:1; transform:translateY(0);}
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #2575fc;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Employee Table */
+    table {
+      width: 100%;
+      max-width: 800px;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.95);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      animation: fadeIn 0.8s ease;
+    }
+
+    th {
+      background: #6a11cb;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      padding: 12px;
+      text-align: left;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      color: #333;
+    }
+
+    tr:hover td {
+      background: #f0f4ff;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 15px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Employee Registration</h2>
+
+  <div class="container">
+    <form id="employeeForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter full name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter email" required>
+
+      <label for="department">Department</label>
+      <select id="department" name="department" required>
+        <option value="">--Select Department--</option>
+        <option>HR</option>
+        <option>IT</option>
+        <option>Finance</option>
+        <option>Marketing</option>
+      </select>
+
+      <label for="position">Position</label>
+      <input type="text" id="position" name="position" placeholder="Enter position" required>
+
+      <label for="salary">Salary</label>
+      <input type="number" id="salary" name="salary" placeholder="Enter salary" required>
+
+      <button type="submit">Add Employee</button>
+    </form>
+  </div>
+
+  <h3>Employee List</h3>
+  <table id="employeeTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Position</th>
+        <th>Salary (₹)</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr class="no-data"><td colspan="5">No employees added yet.</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById('employeeForm');
+    const tableBody = document.getElementById('tableBody');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const dept = form.department.value;
+      const position = form.position.value.trim();
+      const salary = form.salary.value.trim();
+
+      if (!name || !email || !dept || !position || !salary) return;
+
+      // Remove "No employees added yet." row if present
+      const noDataRow = document.querySelector('.no-data');
+      if (noDataRow) noDataRow.remove();
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${email}</td>
+        <td>${dept}</td>
+        <td>${position}</td>
+        <td>${salary}</td>
+      `;
+      tableBody.appendChild(row);
+
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
